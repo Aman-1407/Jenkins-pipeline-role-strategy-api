@@ -71,3 +71,7 @@ Make sure to review and test the pipeline before implementing it in a production
 
 #Conclusion:
 This SOP outlines the steps to implement a Jenkins pipeline that automates role and user management using the Role-Based Strategy plugin. By following these steps, configuring Jenkins global security settings, enabling user sign-up, setting appropriate permissions for the Jenkins API token, and performing script approval, you can efficiently manage roles and users in Jenkins, ensuring a secure and organized continuous integration and continuous delivery (CI/CD) environment.
+
+![Screenshot (221)](https://github.com/Aman-1407/Jenkins-pipeline-role-strategy-api/assets/64796798/90cd5803-e33e-4a28-89ba-04e72e095ed6)
+
+
