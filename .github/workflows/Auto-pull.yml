@@ -35,5 +35,14 @@ jobs:
         env:
           GIT_USERNAME: ${{ secrets.GIT_USERNAME }}
           GIT_PASSWORD: ${{ secrets.GIT_PASSWORD }}
-          #    SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Show SSH command output
+        if: always()  # Always run this step, even if the previous step fails
+        run: |
+          echo "SSH Command Output:"
+          echo "${{ steps.ssh_deploy.outputs.stdout }}"
+          echo "End of SSH Command Output"
+          
+          
+        #    SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
                # git pull https://${{ secrets.GIT_USERNAME }}:${{ secrets.GIT_PASSWORD }}@github.com/aais-ai-2/backend.git dev
