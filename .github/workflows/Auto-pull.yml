@@ -10,8 +10,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # - name: Checkout code
-      #   uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
       - name: Deploy using ssh
         uses: appleboy/ssh-action@master
@@ -26,7 +26,7 @@ jobs:
             cd /home/ubuntu/Django_email_tracker
             git stash
             git branch
-            git pull origin dev 
+            git pull https://${{ secrets.GIT_USERNAME }}:${{ secrets.GIT_PASSWORD }}@github.com/aais-ai-2/backend.git dev
             git status
             sudo systemctl restart nginx
             sudo systemctl status nginx
@@ -36,4 +36,4 @@ jobs:
           GIT_USERNAME: ${{ secrets.GIT_USERNAME }}
           GIT_PASSWORD: ${{ secrets.GIT_PASSWORD }}
           #    SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-    #            git pull https://${{ secrets.GIT_USERNAME }}:${{ secrets.GIT_PASSWORD }}@github.com/aais-ai-2/backend.git dev
+               # git pull https://${{ secrets.GIT_USERNAME }}:${{ secrets.GIT_PASSWORD }}@github.com/aais-ai-2/backend.git dev
