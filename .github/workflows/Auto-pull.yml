@@ -13,19 +13,27 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: SSH into server and execute commands
-        run: |
-          echo "Executing SSH commands..."
-          ssh -o StrictHostKeyChecking=no ubuntu@13.41.62.113 'cd /home/ubuntu/Django_email_tracker && \
-          git stash && \
-          git branch && \
-          git pull https://${{ secrets.GIT_USERNAME }}:${{ secrets.GIT_PASSWORD }}@github.com/aais-ai-2/backend.git dev && \
-          sudo systemctl restart nginx && \
-          sudo systemctl status nginx && \
-          sudo systemctl restart gunicorn && \
-          sudo systemctl status gunicorn'
+      - name: Deploy using ssh
+        uses: appleboy/ssh-action@master
         if: github.event_name == 'push' && github.ref == 'refs/heads/dev'
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+          script: |
+            echo "Executing SSH commands..."
+            cd /home/ubuntu/Django_email_tracker
+            git stash
+            git branch
+            git pull origin dev 
+            git status
+            sudo systemctl restart nginx
+            sudo systemctl status nginx
+            sudo systemctl restart gunicorn
+            sudo systemctl status gunicorn
         env:
           GIT_USERNAME: ${{ secrets.GIT_USERNAME }}
           GIT_PASSWORD: ${{ secrets.GIT_PASSWORD }}
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      #    SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+#            git pull https://${{ secrets.GIT_USERNAME }}:${{ secrets.GIT_PASSWORD }}@github.com/aais-ai-2/backend.git dev
